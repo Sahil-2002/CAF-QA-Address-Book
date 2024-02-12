@@ -1,108 +1,99 @@
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class addressbook{
-        String First_name, Last_name, City, State, email, phone,zip;
-        ArrayList<String>book = new ArrayList<>();
-        public void Getdetails(){
-                Scanner sc = new Scanner(System.in);
+class contacts {
+        String First_name, Last_name, City, State, zip, phone, email;
 
-                System.out.println("Enter your name : ");
-                First_name=sc.next();
-                book.add(First_name);
-                System.out.println("Enter your last name : ");
-                Last_name=sc.next();
-                book.add(Last_name);
-                System.out.println("Enter your City : ");
-                City=sc.next();
-                book.add(City);
-                System.out.println("Enter your State : ");
-                State=sc.next();
-                book.add(State);
-                System.out.println("Enter your zip : ");
-                zip=sc.next();
-                book.add(zip);
-                System.out.println("enter your phone number : ");
-                phone=sc.next();
-                book.add(phone);
-                System.out.println("Enter your Email id : ");
-                email=sc.next();
-                book.add(email);
+        public contacts(String First_name, String Last_name, String City, String State, String zip, String phone, String email) {
+                this.First_name = First_name;
+                this.Last_name = Last_name;
+                this.City = City;
+                this.State = State;
+                this.zip = zip;
+                this.phone = phone;
+                this.email = email;
         }
+
+        public String getFirst_name() {
+                return First_name;
+        }
+
+        public String getLast_name() {
+                return Last_name;
+        }
+
+        public String getCity() {
+                return City;
+        }
+
+        public String getState() {
+                return State;
+        }
+
+        public String getZip() {
+                return zip;
+        }
+
+        public String getPhone() {
+                return phone;
+        }
+
+        public String getEmail() {
+                return email;
+        }
+}
+
+class Adbook {
+        ArrayList<contacts> contact = new ArrayList<>();
+
+        public void setContact(contacts contact) {
+                this.contact.add(contact);
+        }
+
         public void display() {
-                for (int i =0; i<book.size();i++){
-                        System.out.println(book.get(i));}
-        }
-        public void edit(String name){
-                Scanner scanner = new Scanner(System.in);
-                boolean contactFound = false;
-                for(int i =0; i<book.size(); i=i+7) {
-                        if (book.get(i).equalsIgnoreCase(name)) {
-                                System.out.println("Contact found. Enter new details:");
-
-                                System.out.println("Enter your last name: ");
-                                book.set(i + 1, scanner.next());
-
-                                System.out.println("Enter your City: ");
-                                book.set(i + 2, scanner.next());
-
-                                System.out.println("Enter your State: ");
-                                book.set(i + 3, scanner.next());
-
-                                System.out.println("Enter your zip: ");
-                                book.set(i + 4, scanner.next());
-
-                                System.out.println("Enter your phone number: ");
-                                book.set(i + 5, scanner.next());
-
-                                System.out.println("Enter your Email id: ");
-                                book.set(i + 6, scanner.next());
-                                contactFound = true;
-                                break;
-
-
-                        }
-
-
+                for (contacts c : contact) {
+                        System.out.println("Name of person is " + c.getFirst_name() + " " + c.getLast_name());
+                        System.out.println("Name of City is " + c.getCity());
+                        System.out.println("Name of State is " + c.getState());
+                        System.out.println("Zip code is " + c.getZip());
+                        System.out.println("phone number is " + c.getPhone());
+                        System.out.println("Email id is " + c.getEmail());
+                        System.out.println();
                 }
-                if (!contactFound) {
-                        System.out.println("Contact not found.");
-                }
-
         }
-        public void delete(String name1){
-                for(int i =0; i<book.size();i=i+7) {
-                        if (book.get(i).equalsIgnoreCase(name1))
-                        {
-                              book.remove(i+6);book.remove(i+5);book.remove(i+4);book.remove(i+3);book.remove(i+2);book.remove(i);
-
-                        }
-                }
-
-        }
-
-        }
-
-
+}
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Welcome to Address Book");
-addressbook ad = new addressbook();
-ad.Getdetails();
-            System.out.println("\n");
-ad.display();
-Scanner sc = new Scanner(System.in);
-            System.out.println("enter name you want to edit : ");
-            String name = sc.next();
-            ad.edit(name);
-            System.out.println("updated contact list ");
-            ad.display();
-            System.out.println("enter name you want to delete ");
-            String name1 =sc.next();
-            ad.delete(name1);
-            System.out.println("after deleting the data ");
-            ad.display();
-    }
+        public static void main(String[] args) {
+                System.out.println("Welcome to address book ");
+                Scanner sc = new Scanner(System.in);
+                Adbook ad = new Adbook();
+                while (true) {
+                        System.out.println("enter the first name ");
+                        String First_name = sc.next();
+                        System.out.println("enter the last name ");
+                        String Last_name = sc.next();
+                        System.out.println("enter the city  ");
+                        String city = sc.next();
+                        System.out.println("enter the state ");
+                        String state = sc.next();
+                        System.out.println("enter the zip ");
+                        String zip = sc.next();
+                        System.out.println("enter the phone number ");
+                        String phone = sc.next();
+                        System.out.println("enter the email");
+                        String email = sc.next();
+
+                        contacts cd = new contacts(First_name, Last_name, city, state, zip, phone, email);
+                        ad.setContact(cd);
+
+                        System.out.println("Do you want to add more contacts? (yes/no) ");
+                        String choice = sc.next();
+                        if (!choice.equalsIgnoreCase("yes")) {
+                                break;
+                        }
+                }
+                ad.display();
+                sc.close();
+        }
 }
