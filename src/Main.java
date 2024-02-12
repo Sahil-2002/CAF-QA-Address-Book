@@ -1,4 +1,4 @@
-import java.sql.SQLOutput;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -29,20 +29,52 @@ class addressbook{
                 System.out.println("Enter your Email id : ");
                 email=sc.next();
                 book.add(email);
-
-
-
-
-
         }
         public void display() {
-                for (int i = 0; i < book.size(); i++) {
-                        System.out.println(book.get(i));
+                for (int i =0; i<book.size();i++){
+                        System.out.println(book.get(i));}
+        }
+        public void edit(String name){
+                Scanner scanner = new Scanner(System.in);
+                boolean contactFound = false;
+                for(int i =0; i<book.size(); i=i+7) {
+                        if (book.get(i).equalsIgnoreCase(name)) {
+                                System.out.println("Contact found. Enter new details:");
+
+                                System.out.println("Enter your last name: ");
+                                book.set(i + 1, scanner.next());
+
+                                System.out.println("Enter your City: ");
+                                book.set(i + 2, scanner.next());
+
+                                System.out.println("Enter your State: ");
+                                book.set(i + 3, scanner.next());
+
+                                System.out.println("Enter your zip: ");
+                                book.set(i + 4, scanner.next());
+
+                                System.out.println("Enter your phone number: ");
+                                book.set(i + 5, scanner.next());
+
+                                System.out.println("Enter your Email id: ");
+                                book.set(i + 6, scanner.next());
+                                contactFound = true;
+                                break;
+
+
+                        }
+
+                        if (!contactFound) {
+                                System.out.println("Contact not found.");
+                        }
                 }
+
+        }
+
         }
 
 
-}
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book");
@@ -50,6 +82,12 @@ addressbook ad = new addressbook();
 ad.Getdetails();
             System.out.println("\n");
 ad.display();
+Scanner sc = new Scanner(System.in);
+            System.out.println("enter name you want to edit : ");
+            String name = sc.next();
+            ad.edit(name);
+            System.out.println("updated contact list ");
+            ad.display();
 
 
 
