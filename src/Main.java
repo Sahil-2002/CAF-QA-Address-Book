@@ -64,8 +64,19 @@ class addressbook{
 
                         }
 
-                        if (!contactFound) {
-                                System.out.println("Contact not found.");
+
+                }
+                if (!contactFound) {
+                        System.out.println("Contact not found.");
+                }
+
+        }
+        public void delete(String name1){
+                for(int i =0; i<book.size();i=i+7) {
+                        if (book.get(i).equalsIgnoreCase(name1))
+                        {
+                              book.remove(i+6);book.remove(i+5);book.remove(i+4);book.remove(i+3);book.remove(i+2);book.remove(i);
+
                         }
                 }
 
@@ -87,6 +98,11 @@ Scanner sc = new Scanner(System.in);
             String name = sc.next();
             ad.edit(name);
             System.out.println("updated contact list ");
+            ad.display();
+            System.out.println("enter name you want to delete ");
+            String name1 =sc.next();
+            ad.delete(name1);
+            System.out.println("after deleting the data ");
             ad.display();
 
 
