@@ -104,19 +104,5 @@ Scanner sc = new Scanner(System.in);
             ad.delete(name1);
             System.out.println("after deleting the data ");
             ad.display();
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
 }
