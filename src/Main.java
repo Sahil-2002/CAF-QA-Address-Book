@@ -15,15 +15,35 @@ class Contacts {
                 this.email = email;
         }
 
-        // Getters for contact details
+        @Override
+        public boolean equals(Object obj) {
+                if((obj == null || (getClass() != obj.getClass()))){
+                        return false;
+                }
+                Contacts other = (Contacts)obj;
+                return firstName.equals(other.firstName)&& email.equals(other.email);
+
+        }
 }
+
 
 class AddressBook {
         ArrayList<Contacts> contactsList = new ArrayList<>();
 
         public void addContact(Contacts contact) {
-                contactsList.add(contact);
+                boolean isDuplicate = contactsList.stream()
+                        .anyMatch(existingContact -> existingContact.equals(contact));
+
+                if (isDuplicate) {
+                        System.out.println("Duplicate entry. This contact already exists in the address book.");
+
+                } else {
+                        contactsList.add(contact);
+
+                }
         }
+
+
 
         public void displayContacts() {
                 for (Contacts contact : contactsList) {
