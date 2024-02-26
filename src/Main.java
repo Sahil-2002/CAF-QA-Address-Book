@@ -68,9 +68,14 @@ class AddressBook {
 }
 
 public class Main {
+    static HashMap<String, List<String>> Bycity = new HashMap<>();
+    static HashMap<String, List<String>> Bystate = new HashMap<>();
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         HashMap<String, AddressBook> addressBooks = new HashMap<>();
+
+
 
         while (true) {
             System.out.println("1. Create a new address book");
@@ -145,32 +150,46 @@ public class Main {
     }
 
     private static void searchContactsByCity(HashMap<String, AddressBook> addressBooks, String city) {
+
+        List<String> namesCity = new ArrayList<>();
         for (String addressBookName : addressBooks.keySet()) {
             AddressBook addressBook = addressBooks.get(addressBookName);
             List<Contacts> contactsInCity = addressBook.searchByCity(city);
+
+
             if (!contactsInCity.isEmpty()) {
                 System.out.println("Contacts in city '" + city + "' in address book '" + addressBookName + "':");
                 for (Contacts contact : contactsInCity) {
-                    System.out.println("Name: " + contact.firstName + " " + contact.lastName);
 
+
+                    System.out.println("Name: " + contact.firstName + " " + contact.lastName);
+                    namesCity.add(contact.firstName + " " + contact.lastName);
                     System.out.println();
                 }
             }
         }
+
+        Bycity.put(city, namesCity);
+        System.out.println(Bycity);
     }
 
     private static void searchContactsByState(HashMap<String, AddressBook> addressBooks, String state) {
+        List<String> namesState = new ArrayList<>();
         for (String addressBookName : addressBooks.keySet()) {
             AddressBook addressBook = addressBooks.get(addressBookName);
             List<Contacts> contactsInState = addressBook.searchByState(state);
+
             if (!contactsInState.isEmpty()) {
                 System.out.println("Contacts in state '" + state + "' in address book '" + addressBookName + "':");
                 for (Contacts contact : contactsInState) {
                     System.out.println("Name: " + contact.firstName + " " + contact.lastName);
-
+                    System.out.println("Name of state is :" + contact.state);
+                    namesState.add(contact.firstName + " " + contact.lastName);
                     System.out.println();
                 }
             }
         }
+        Bystate.put(state, namesState);
+        System.out.println(Bystate);
     }
 }
