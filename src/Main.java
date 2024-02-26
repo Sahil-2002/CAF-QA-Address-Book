@@ -152,6 +152,7 @@ public class Main {
     private static void searchContactsByCity(HashMap<String, AddressBook> addressBooks, String city) {
 
         List<String> namesCity = new ArrayList<>();
+        int count =0;
         for (String addressBookName : addressBooks.keySet()) {
             AddressBook addressBook = addressBooks.get(addressBookName);
             List<Contacts> contactsInCity = addressBook.searchByCity(city);
@@ -165,16 +166,21 @@ public class Main {
                     System.out.println("Name: " + contact.firstName + " " + contact.lastName);
                     namesCity.add(contact.firstName + " " + contact.lastName);
                     System.out.println();
+
                 }
             }
+             count= (int) namesCity.stream().count();
         }
 
         Bycity.put(city, namesCity);
         System.out.println(Bycity);
+        System.out.println("The count of contacts belongs to "+city+" is "+count);
+
     }
 
     private static void searchContactsByState(HashMap<String, AddressBook> addressBooks, String state) {
         List<String> namesState = new ArrayList<>();
+        int count =0;
         for (String addressBookName : addressBooks.keySet()) {
             AddressBook addressBook = addressBooks.get(addressBookName);
             List<Contacts> contactsInState = addressBook.searchByState(state);
@@ -183,13 +189,14 @@ public class Main {
                 System.out.println("Contacts in state '" + state + "' in address book '" + addressBookName + "':");
                 for (Contacts contact : contactsInState) {
                     System.out.println("Name: " + contact.firstName + " " + contact.lastName);
-                    System.out.println("Name of state is :" + contact.state);
                     namesState.add(contact.firstName + " " + contact.lastName);
                     System.out.println();
                 }
             }
+            count = (int) namesState.stream().count();
         }
         Bystate.put(state, namesState);
         System.out.println(Bystate);
+        System.out.println("The count of contacts belongs to "+state+" is "+count);
     }
 }
