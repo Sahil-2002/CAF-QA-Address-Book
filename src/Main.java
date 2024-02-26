@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class Contacts {
@@ -31,6 +28,7 @@ class Contacts {
 class AddressBook {
     ArrayList<Contacts> contactsList = new ArrayList<>();
 
+
     public void addContact(Contacts contact) {
         boolean isDuplicate = contactsList.stream()
                 .anyMatch(existingContact -> existingContact.equals(contact));
@@ -39,10 +37,13 @@ class AddressBook {
             System.out.println("Duplicate entry. This contact already exists in the address book.");
         } else {
             contactsList.add(contact);
+            Collections.sort(contactsList,Comparator.comparing(c->c.firstName));
         }
+
     }
 
     public void displayContacts() {
+
         for (Contacts contact : contactsList) {
             System.out.println("Name: " + contact.firstName + " " + contact.lastName);
             System.out.println("City: " + contact.city);
@@ -193,9 +194,11 @@ public class Main {
                     System.out.println();
                 }
             }
+
             count = (int) namesState.stream().count();
         }
         Bystate.put(state, namesState);
+
         System.out.println(Bystate);
         System.out.println("The count of contacts belongs to "+state+" is "+count);
     }
