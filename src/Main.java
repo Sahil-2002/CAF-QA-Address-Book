@@ -37,9 +37,17 @@ class AddressBook {
             System.out.println("Duplicate entry. This contact already exists in the address book.");
         } else {
             contactsList.add(contact);
-            Collections.sort(contactsList,Comparator.comparing(c->c.firstName));
+            Collections.sort(contactsList, Comparator.comparing(c -> c.firstName));
         }
 
+    }
+
+    public void SortbyCity() {
+        Collections.sort(contactsList, Comparator.comparing(c -> c.city));
+    }
+
+    public void SortbyState() {
+        Collections.sort(contactsList, Comparator.comparing(c -> c.state));
     }
 
     public void displayContacts() {
@@ -77,14 +85,15 @@ public class Main {
         HashMap<String, AddressBook> addressBooks = new HashMap<>();
 
 
-
         while (true) {
             System.out.println("1. Create a new address book");
             System.out.println("2. Add contact to an existing address book");
             System.out.println("3. Display contacts of an address book");
             System.out.println("4. Search contacts by city");
             System.out.println("5. Search contacts by state");
-            System.out.println("6. Exit");
+            System.out.println("6. Sort contacts in address book by City ");
+            System.out.println("7. Sort contacts in address book by State ");
+            System.out.println("8. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
 
@@ -141,6 +150,34 @@ public class Main {
                     searchContactsByState(addressBooks, stateToSearch);
                     break;
                 case 6:
+                    System.out.println("Enter the Addressbook name to sort by City : ");
+                    String Addressbooksortbycity = scanner.next();
+                    AddressBook Addressbookbycity = addressBooks.get(Addressbooksortbycity);
+                    if (Addressbookbycity != null) {
+                        Addressbookbycity.SortbyCity();
+                        System.out.println("Contacts sorted by city in " + Addressbooksortbycity + " ");
+                        Addressbookbycity.displayContacts();
+
+                    } else {
+                        System.out.println("Address book not found .");
+                    }
+                    break;
+                case 7:
+                    System.out.println("Enter the Addressbook name to sort by State : ");
+                    String AddressbooksortbyState = scanner.next();
+                    AddressBook AddressbookbyState = addressBooks.get(AddressbooksortbyState);
+                    if (AddressbookbyState != null) {
+                        AddressbookbyState.SortbyState();
+                        System.out.println("Contacts sorted by State in " + AddressbooksortbyState + " ");
+                        AddressbookbyState.displayContacts();
+
+                    } else {
+                        System.out.println("Address book not found .");
+                    }
+                    break;
+
+
+                case 8:
                     System.out.println("Exiting...");
                     scanner.close();
                     System.exit(0);
@@ -153,35 +190,41 @@ public class Main {
     private static void searchContactsByCity(HashMap<String, AddressBook> addressBooks, String city) {
 
         List<String> namesCity = new ArrayList<>();
-        int count =0;
+        int count = 0;
         for (String addressBookName : addressBooks.keySet()) {
             AddressBook addressBook = addressBooks.get(addressBookName);
             List<Contacts> contactsInCity = addressBook.searchByCity(city);
 
 
-            if (!contactsInCity.isEmpty()) {
-                System.out.println("Contacts in city '" + city + "' in address book '" + addressBookName + "':");
-                for (Contacts contact : contactsInCity) {
+                if (!contactsInCity.isEmpty()) {
+                    System.out.println("Contacts in city '" + city + "' in address book '" + addressBookName + "':");
+                    for (Contacts contact : contactsInCity) {
 
 
-                    System.out.println("Name: " + contact.firstName + " " + contact.lastName);
-                    namesCity.add(contact.firstName + " " + contact.lastName);
-                    System.out.println();
+                        System.out.println("Name: " + contact.firstName + " " + contact.lastName);
+                        namesCity.add(contact.firstName + " " + contact.lastName);
+                        System.out.println();
 
+                    }
                 }
+                count = (int) namesCity.stream().count();
+
+
+            Bycity.put(city, namesCity);
+
+            System.out.println(Bycity);
+            System.out.println("The count of contacts belongs to " + city + " is " + count);
             }
-             count= (int) namesCity.stream().count();
+
+
+
         }
 
-        Bycity.put(city, namesCity);
-        System.out.println(Bycity);
-        System.out.println("The count of contacts belongs to "+city+" is "+count);
 
-    }
 
     private static void searchContactsByState(HashMap<String, AddressBook> addressBooks, String state) {
         List<String> namesState = new ArrayList<>();
-        int count =0;
+        int count = 0;
         for (String addressBookName : addressBooks.keySet()) {
             AddressBook addressBook = addressBooks.get(addressBookName);
             List<Contacts> contactsInState = addressBook.searchByState(state);
@@ -200,6 +243,6 @@ public class Main {
         Bystate.put(state, namesState);
 
         System.out.println(Bystate);
-        System.out.println("The count of contacts belongs to "+state+" is "+count);
+        System.out.println("The count of contacts belongs to " + state + " is " + count);
     }
 }
